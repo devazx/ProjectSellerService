@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ProjectSellerService.Data;
+using ProjectSellerService.Services;
 
 internal class Program
 {
@@ -13,6 +14,8 @@ internal class Program
 
 
         builder.Services.AddScoped<SeedingService>();
+
+        builder.Services.AddScoped<SellerService>();
         // Add services to the container.
         builder.Services.AddControllersWithViews();
 
