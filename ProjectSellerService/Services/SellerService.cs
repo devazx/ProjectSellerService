@@ -1,4 +1,6 @@
-﻿using ProjectSellerService.Data;
+﻿using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using ProjectSellerService.Data;
 using ProjectSellerService.Models;
 
 namespace ProjectSellerService.Services
@@ -15,6 +17,12 @@ namespace ProjectSellerService.Services
         public List<Seller> FindAll()
         {
             return _context.Seller.ToList();
+        }
+
+        public void Insert(Seller seller)
+        {
+            _context.Add(seller);
+            _context.SaveChanges();
         }
     }
 }
