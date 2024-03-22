@@ -1,9 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using ProjectSellerService.Models;
+using ProjectSellerService.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<ProjectSellerServiceContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("ProjectSellerServiceContext") ?? throw new InvalidOperationException("Connection string 'ProjectSellerServiceContext' not found.")));
+    options.UseMySql(builder.Configuration.GetConnectionString("ProjectSellerServiceContext"),
+    ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("ProjectSellerServiceContext")),
+    builder => builder.MigrationsAssembly("ProjectSellerService")));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
