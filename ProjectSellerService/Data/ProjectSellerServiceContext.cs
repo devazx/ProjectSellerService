@@ -10,6 +10,10 @@ namespace ProjectSellerService.Data
 {
     public class ProjectSellerServiceContext : DbContext
     {
+        public ProjectSellerServiceContext()
+        {
+        }
+
         public ProjectSellerServiceContext(DbContextOptions<ProjectSellerServiceContext> options)
             : base(options)
         {
