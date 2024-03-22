@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using ProjectSellerService.Models;
+using ProjectSellerService.Models.Enums;
 
 namespace ProjectSellerService.Data
 {
@@ -14,6 +15,8 @@ namespace ProjectSellerService.Data
         {
         }
 
-        public DbSet<Department> Department { get; set; } = default!;
+        public DbSet<Department> Department { get; set; }
+        public DbSet<Seller> Seller { get; set; }
+        public DbSet<SalesRecord> SalesRecord { get; set; }
     }
 }
