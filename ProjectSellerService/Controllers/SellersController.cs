@@ -29,7 +29,7 @@ namespace ProjectSellerService.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(Seller seller)
         {
-            _sellerService.Insert(seller);
+            _sellerService.InsertAsync(seller);
             return RedirectToAction(nameof(Index));
         }
     }

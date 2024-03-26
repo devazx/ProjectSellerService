@@ -27,6 +27,7 @@ internal class Program
         //app.Services.CreateScope().ServiceProvider.GetService<SeedingService>().Seed();
         //populando o db
         app.Services.CreateScope().ServiceProvider.GetRequiredService<SeedingService>().Seed();
+        app.Services.CreateScope().ServiceProvider.GetRequiredService<SellerService>();
 
         
 

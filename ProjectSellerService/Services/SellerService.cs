@@ -19,10 +19,10 @@ namespace ProjectSellerService.Services
             return _context.Seller.ToList();
         }
 
-        public void Insert(Seller seller)
+        public async Task InsertAsync(Seller obj)
         {
-            _context.Add(seller);
-            _context.SaveChanges();
+            _context.Add(obj);
+            await _context.SaveChangesAsync();
         }
     }
 }
