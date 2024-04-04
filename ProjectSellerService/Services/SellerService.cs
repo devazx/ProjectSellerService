@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Diagnostics;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using ProjectSellerService.Data;
+﻿using ProjectSellerService.Data;
 using ProjectSellerService.Models;
 
 namespace ProjectSellerService.Services
@@ -19,9 +17,8 @@ namespace ProjectSellerService.Services
             return _context.Seller.ToList();
         }
 
-        public async Task InsertAsync(Seller obj)
+        public void Insert(Seller obj)
         {
-            obj.Department = _context.Department.First();
             _context.Add(obj);
             _context.SaveChanges();
         }

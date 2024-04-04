@@ -29,7 +29,7 @@ internal class Program
         app.Services.CreateScope().ServiceProvider.GetRequiredService<SeedingService>().Seed();
         app.Services.CreateScope().ServiceProvider.GetRequiredService<SellerService>();
 
-        
+
 
         // Configure the HTTP request pipeline.
         if (!app.Environment.IsDevelopment())
