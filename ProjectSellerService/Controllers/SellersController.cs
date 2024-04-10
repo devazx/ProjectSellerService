@@ -36,6 +36,10 @@ namespace ProjectSellerService.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(Seller seller)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(seller);
+            }
             _sellerService.Insert(seller);
             return RedirectToAction(nameof(Index));
         }
@@ -79,6 +83,7 @@ namespace ProjectSellerService.Controllers
         }
         public IActionResult Edit(int? id)
         {
+
             if (id == null)
             {
                 return RedirectToAction(nameof(Error), new { message = "Id not provided" });
@@ -98,7 +103,11 @@ namespace ProjectSellerService.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(int id, Seller seller)
         {
-            if(id!=seller.Id)
+            if (!ModelState.IsValid)
+            {
+                return View(seller);
+            }
+            if (id!=seller.Id)
             {
                 return RedirectToAction(nameof(Error), new { message = "Id missmatch" });
             }
