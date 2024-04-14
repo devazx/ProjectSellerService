@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ProjectSellerService.Data;
 using ProjectSellerService.Services;
+using System.Globalization;
+using Microsoft.AspNetCore.Localization;
 
 internal class Program
 {
@@ -28,8 +30,6 @@ internal class Program
         //populando o db
         app.Services.CreateScope().ServiceProvider.GetRequiredService<SeedingService>().Seed();
         app.Services.CreateScope().ServiceProvider.GetRequiredService<SellerService>();
-
-
 
         // Configure the HTTP request pipeline.
         if (!app.Environment.IsDevelopment())

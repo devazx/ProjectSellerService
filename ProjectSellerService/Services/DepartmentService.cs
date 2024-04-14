@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using ProjectSellerService.Data;
 using ProjectSellerService.Models;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace ProjectSellerService.Services
@@ -16,10 +17,9 @@ namespace ProjectSellerService.Services
             _context = context;
         }
 
-        public List<Department> FindAll()
+        public async Task<List<Department>> FindAllAsync()
         {
-            return _context.Department.ToList();
-
+            return await _context.Department.OrderBy(x => x.Name).ToListAsync();
         }
     }
 }
