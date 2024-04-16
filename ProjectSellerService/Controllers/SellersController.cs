@@ -9,7 +9,6 @@ namespace ProjectSellerService.Controllers
 {
     public class SellersController : Controller
     {
-
         private readonly SellerService _sellerService;
         private readonly DepartmentService _departmentService;
 
@@ -45,19 +44,20 @@ namespace ProjectSellerService.Controllers
             await _sellerService.InsertAsync(seller);
             return RedirectToAction(nameof(Index));
         }
-        
-        public async Task<IActionResult> Delete(int? id) 
-        { 
+
+        public async Task<IActionResult> Delete(int? id)
+        {
             if (id == null)
             {
                 return RedirectToAction(nameof(Error), new { message = "Id not provided" });
             }
-            var obj = await _sellerService.FindByIdAsync(id.Value);
 
+            var obj = await _sellerService.FindByIdAsync(id.Value);
             if (obj == null)
             {
                 return RedirectToAction(nameof(Error), new { message = "Id not found" });
             }
+
             return View(obj);
         }
 
@@ -69,9 +69,10 @@ namespace ProjectSellerService.Controllers
             {
                 await _sellerService.RemoveAsync(id);
                 return RedirectToAction(nameof(Index));
-            }catch(IntegrityException e )
+            }
+            catch (IntegrityException e)
             {
-                return RedirectToAction(nameof(Error), new { message = "Id not found" });
+                return RedirectToAction(nameof(Error), new { message = e.Message });
             }
         }
 
@@ -81,6 +82,7 @@ namespace ProjectSellerService.Controllers
             {
                 return RedirectToAction(nameof(Error), new { message = "Id not provided" });
             }
+
             var obj = await _sellerService.FindByIdAsync(id.Value);
             if (obj == null)
             {
@@ -89,13 +91,14 @@ namespace ProjectSellerService.Controllers
 
             return View(obj);
         }
+
         public async Task<IActionResult> Edit(int? id)
         {
-
             if (id == null)
             {
                 return RedirectToAction(nameof(Error), new { message = "Id not provided" });
             }
+
             var obj = await _sellerService.FindByIdAsync(id.Value);
             if (obj == null)
             {
@@ -104,9 +107,9 @@ namespace ProjectSellerService.Controllers
 
             List<Department> departments = await _departmentService.FindAllAsync();
             SellerFormViewModel viewModel = new SellerFormViewModel { Seller = obj, Departments = departments };
-
             return View(viewModel);
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, Seller seller)
@@ -117,20 +120,16 @@ namespace ProjectSellerService.Controllers
                 var viewModel = new SellerFormViewModel { Seller = seller, Departments = departments };
                 return View(viewModel);
             }
-            if (id!=seller.Id)
+            if (id != seller.Id)
             {
-                return RedirectToAction(nameof(Error), new { message = "Id missmatch" });
+                return RedirectToAction(nameof(Error), new { message = "Id mismatch" });
             }
             try
             {
-                await _sellerService.Update(seller);
-                return RedirectToAction(nameof(Edit));
+                await _sellerService.UpdateAsync(seller);
+                return RedirectToAction(nameof(Index));
             }
-            catch (NotFoundException e)
-            {
-                return RedirectToAction(nameof(Error), new { message = e.Message });
-            }
-            catch (DbConcurrencyException e)
+            catch (ApplicationException e)
             {
                 return RedirectToAction(nameof(Error), new { message = e.Message });
             }

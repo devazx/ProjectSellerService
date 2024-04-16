@@ -32,13 +32,19 @@ namespace ProjectSellerService.Services
 
         public async Task RemoveAsync(int id)
         {
-            var obj = await _context.Seller.FindAsync(id);
-            _context.Seller.Remove(obj);
-            await _context.SaveChangesAsync();
+            try
+            {
+                var obj = await _context.Seller.FindAsync(id);
+                _context.Seller.Remove(obj);
+                await _context.SaveChangesAsync();
+            }catch(DbUpdateException e)
+            {
+                throw new IntegrityException("Can't delete seller becouse he/she has sales");
+            }
 
         }
 
-        public async Task Update(Seller obj)
+        public async Task UpdateAsync(Seller obj)
         {
             bool hasAny = await _context.Seller.AnyAsync(x => x.Id == obj.Id);
             if (!hasAny) 

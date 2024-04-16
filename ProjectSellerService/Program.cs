@@ -3,6 +3,7 @@ using ProjectSellerService.Data;
 using ProjectSellerService.Services;
 using System.Globalization;
 using Microsoft.AspNetCore.Localization;
+using System.Net.WebSockets;
 
 internal class Program
 {
@@ -19,17 +20,26 @@ internal class Program
 
         builder.Services.AddScoped<SellerService>();
         // Add services to the container.
+
+        builder.Services.AddScoped<DepartmentService>();
+
+        builder.Services.AddScoped<SalesRecordService>();
+
         builder.Services.AddControllersWithViews();
 
 
 
         var app = builder.Build();
+       
 
         //app.Services.GetRequiredService<SeedingService>().Seed();
         //app.Services.CreateScope().ServiceProvider.GetService<SeedingService>().Seed();
         //populando o db
         app.Services.CreateScope().ServiceProvider.GetRequiredService<SeedingService>().Seed();
         app.Services.CreateScope().ServiceProvider.GetRequiredService<SellerService>();
+        app.Services.CreateScope().ServiceProvider.GetRequiredService<DepartmentService>();
+        app.Services.CreateScope().ServiceProvider.GetRequiredService<SalesRecordService>();
+
 
         // Configure the HTTP request pipeline.
         if (!app.Environment.IsDevelopment())

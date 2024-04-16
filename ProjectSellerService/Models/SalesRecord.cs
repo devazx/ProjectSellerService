@@ -1,4 +1,7 @@
-﻿namespace ProjectSellerService.Models.Enums;
+﻿using ProjectSellerService.Models.Enums;
+using System;
+
+namespace ProjectSellerService.Models;
 
 public class SalesRecord
 {
